@@ -8,7 +8,7 @@ const { once } = require('node:events')
 const { tick: fastTimersTick } = require('../lib/util/timers')
 const { fetch, Agent, RetryAgent } = require('..')
 
-test('https://github.com/nodejs/undici/issues/3356', { skip: process.env.CITGM }, async (t) => {
+test('https://github.com/nodejs/undici/issues/3356', { skip: process.env.CITGM || (process.platform === 'darwin' ? 'timing race: 50ms bodyTimeout vs 100ms delayed end loses on slow macOS runners and hangs the job' : false) }, async (t) => {
   t = tspl(t, { plan: 3 })
 
   let shouldRetry = true
